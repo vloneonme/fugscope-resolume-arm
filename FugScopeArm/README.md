@@ -4,10 +4,13 @@
 Цель — источник звуковой волны для Resolume Arena/Avenue **7.11+** на Mac ARM.
 Название в Resolume: **FugScope ARM**, вкладка **Sources**.
 
-**Состояние на 6 сентября 2026: исходники и сборка подготовлены. Готового
-macOS `.bundle` в этом архиве нет.** Проверены C++-код, FFGL API и реальная
-отрисовка в OpenGL 4.1 на Linux. Сборка Apple clang/CoreAudio и загрузка в
-Resolume на Mac ещё не проверены. Это кандидат для проверки на Mac.
+**Состояние: исходники и сборка подготовлены. Готового macOS `.bundle` в этом
+архиве нет.** Проверены C++-код, FFGL API и реальная отрисовка в OpenGL 4.1
+на Linux. По присланному пользователем логу на Mac прошли компиляция Apple
+clang/CoreAudio, линковка и проверка Info.plist. Затем исходный скрипт остановился
+на ошибке порядка аргументов `lipo`; она исправлена в архиве `source-fix1`.
+Успешные проверка архитектуры, подпись, установка и запуск в Resolume пока
+не подтверждены. Это кандидат для проверки на Mac.
 
 ## Как собрать и установить на Mac
 
@@ -43,6 +46,23 @@ bash scripts/install-macos.sh arm64
 bash scripts/build-macos.sh universal
 bash scripts/install-macos.sh universal
 ```
+
+### Исправление ошибки lipo в первом архиве
+
+Если сборка уже дошла до `Info.plist: OK`, а затем остановилась с
+`unknown architecture specification flag` и путём к бинарнику, повторная
+компиляция не требуется. Закройте Resolume и выполните из папки проекта:
+
+```bash
+xcrun lipo "build/arm64/FugScopeArm.bundle/Contents/MacOS/FugScopeArm" -verify_arch arm64 &&
+codesign --force --sign - "build/arm64/FugScopeArm.bundle" &&
+bash scripts/install-macos.sh arm64
+```
+
+В `scripts/build-macos.sh` исправлен порядок: `lipo <бинарник> -verify_arch <архитектуры>`.
+Для последующих сборок используйте исправленный архив `FugScopeArm-source-fix1.zip`.
+Предупреждения `implicit-const-int-float-conversion` в PortAudio и FFGL SDK
+не остановили показанную сборку; причина остановки — отдельная команда `lipo`.
 
 Результат: `build/arm64/FugScopeArm.bundle` либо `build/universal/FugScopeArm.bundle`.
 ARM64-сборка предназначена для Resolume, запущенного нативно. При запуске через
@@ -108,7 +128,7 @@ GitHub Actions workflow в `.github/workflows/macos.yml` подготовлен 
 Universal на macOS runner, но здесь не запускался и никуда не публиковался.
 
 **Следующий шаг для агента с доступом к Mac:** выполнить `build-macos.sh arm64`,
-устранить возможные ошибки Apple SDK, установить bundle, пройти сценарии из
+либо завершить уже выполненную сборку командами выше, установить bundle, пройти сценарии из
 VALIDATION.md на Resolume 7.11+, обновить этот README и приложить проверенный
 bundle вместе с соответствующими исходниками.
 
