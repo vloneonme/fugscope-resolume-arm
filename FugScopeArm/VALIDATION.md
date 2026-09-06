@@ -62,6 +62,28 @@ Linux OpenGL host линкуется с PortAudio без аппаратного 
 
 ## Осталось выполнить на Mac
 
+### Последний подтверждённый сбой загрузки
+
+Журнал пользователя от 2026-09-06 22:17:38 +03:00:
+
+```text
+scanDirectoryForExtensions: scanning directory '/Users/ivan/Documents/Resolume/Extra Effects'
+load: Loading plugin '/Users/ivan/Documents/Resolume/Extra Effects/FugScopeArm.bundle/Contents/MacOS/FugScopeArm'
+Loading plugin failed, lib could not be opened.
+Done scanning directory, loaded 0 plugin(s) from it.
+```
+
+Папка сканируется, бинарник найден; предыдущая гипотеза об отсутствии каталога
+больше не объясняет текущий сбой. Нужен подробный `dlerror` и Kind процесса хоста.
+Диагностика расширена отдельным ARM64 `dlopen` helper. На Linux проверены
+компиляция его переносимого C-кода и ветка ошибки при отсутствующем файле;
+это не macOS-проверка. На Mac helper загрузит библиотеку и проверит экспорт
+`plugMain`, не вызывая FFGL InitGL или аудиозахват. Успех в helper не подтверждает
+политику подписи/архитектуру процесса Resolume. Не удалять атрибуты безопасности
+и не переподписывать приложение хоста без установленной причины.
+
+### История предыдущего этапа (до получения журнала)
+
 Пользователь сообщил: «нету эффекта в сурсах». Вывод установки, точная версия
 хоста и строки журнала ещё не получены. Исходный код объявляет FF_SOURCE и
 проходил проверку FFGL metadata на Linux, но это не доказывает обнаружение на Mac.
