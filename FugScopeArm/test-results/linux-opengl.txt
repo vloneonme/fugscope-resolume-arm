@@ -1,0 +1,23 @@
+Renderer: llvmpipe (LLVM 20.1.2, 256 bits); OpenGL: 4.1 (Core Profile) Mesa 25.2.8-0ubuntu0.24.04.2
+PASS mode=0 arrange=0 visible=8341 transparent=223060
+PASS mode=1 arrange=0 visible=9010 transparent=222391
+PASS mode=2 arrange=0 visible=73113 transparent=158288
+PASS mode=3 arrange=0 visible=17744 transparent=213657
+PASS mode=4 arrange=0 visible=16280 transparent=215121
+PASS mode=5 arrange=0 visible=115983 transparent=115418
+PASS mode=6 arrange=0 visible=115415 transparent=115986
+PASS mode=0 arrange=1 visible=15478 transparent=215923
+PASS mode=1 arrange=1 visible=11847 transparent=219554
+PASS mode=2 arrange=1 visible=72641 transparent=158760
+PASS mode=3 arrange=1 visible=23154 transparent=208247
+PASS mode=4 arrange=1 visible=29558 transparent=201843
+PASS mode=5 arrange=1 visible=116745 transparent=114656
+PASS mode=6 arrange=1 visible=114644 transparent=116757
+PASS mode=0 arrange=2 visible=15480 transparent=215921
+PASS mode=1 arrange=2 visible=11867 transparent=219534
+PASS mode=2 arrange=2 visible=72567 transparent=158834
+PASS mode=3 arrange=2 visible=23274 transparent=208127
+PASS mode=4 arrange=2 visible=29660 transparent=201741
+PASS mode=5 arrange=2 visible=116751 transparent=114650
+PASS mode=6 arrange=2 visible=114653 transparent=116748
+PASS: FFGL metadata, 21 rendered combinations, viewport boundaries, GL state, resize, missing audio, teardown

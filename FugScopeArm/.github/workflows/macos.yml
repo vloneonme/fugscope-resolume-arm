@@ -1,0 +1,23 @@
+name: Build macOS bundles
+on:
+  workflow_dispatch:
+  push:
+    branches: [main, master]
+jobs:
+  build:
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test waveform and audio queue
+        run: bash scripts/test-core.sh
+      - name: Build Universal bundle
+        run: bash scripts/build-macos.sh universal
+      - name: Package bundle and corresponding source
+        run: |
+          mkdir -p dist
+          ditto -c -k --keepParent build/universal/FugScopeArm.bundle dist/FugScopeArm-universal.zip
+          git archive --format=zip -o dist/FugScopeArm-source.zip HEAD
+      - uses: actions/upload-artifact@v4
+        with:
+          name: FugScopeArm-macOS
+          path: dist/*.zip
