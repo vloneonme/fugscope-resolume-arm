@@ -17,4 +17,6 @@ if [[ -e "$target_bundle" ]]; then
     echo "Предыдущая версия сохранена в $backup_dir"
 fi
 ditto "$source_bundle" "$target_bundle"
-echo 'Установлено. Перезапустите Resolume → Sources → FugScope ARM.'
+echo "Скопировано в: $target_dir"
+echo 'В Resolume → Preferences → Video → FFGL Plugin Directories добавьте эту папку, если её нет в списке.'
+echo 'Полностью перезапустите Resolume → Sources → FugScope ARM.'
