@@ -1,0 +1,7 @@
+* text=auto
+*.sh text eol=lf
+*.command text eol=lf
+*.ps1 text eol=crlf
+# Preserve upstream files and their original whitespace.
+vendor/** -text -whitespace
+licenses/** -text -whitespace

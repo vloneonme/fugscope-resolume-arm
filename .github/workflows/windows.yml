@@ -1,0 +1,24 @@
+name: Build Windows plugin
+on:
+  workflow_dispatch:
+  push:
+    branches: [main, master]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  windows:
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build, test and package Windows x64 DLL
+        shell: pwsh
+        run: ./scripts/build-windows.ps1
+      - name: Package corresponding source
+        shell: pwsh
+        run: git archive --format=zip -o dist/FugScope-source.zip HEAD
+      - uses: actions/upload-artifact@v4
+        with:
+          name: FugScope-Windows-x64
+          path: dist/*.zip
+          if-no-files-found: error

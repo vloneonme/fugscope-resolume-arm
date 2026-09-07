@@ -1,7 +1,7 @@
 #include "FFGLUtilities.h"
 
 #if defined( FFGL_WINDOWS )
-#include <Windows.h>
+#include <windows.h>
 #elif defined( FFGL_MACOS )
 #include <Carbon/Carbon.h>
 #endif

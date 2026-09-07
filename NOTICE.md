@@ -1,13 +1,13 @@
 # Авторство и лицензии
 
-Это неофициальный перенос **fugScopeGL** на FFGL 2 для macOS Apple Silicon.
+Это неофициальный перенос **fugScopeGL** на FFGL 2 для macOS Apple Silicon и Windows x64.
 Автор оригинала — **Alex May / bigfug**, © 2015, https://www.bigfug.com/.
 Исходники: https://github.com/bigfug/Freeframe, commit
 `cbecd9e4dd0fa148a2cb33ebbd19822bde15c247` (получен 2026-09-06).
 Оригинальный репозиторий выпущен под GPL-3.0; полный текст сохранён в `LICENSE`.
 Перенос и его изменения распространяются под GPL-3.0-only, без гарантий.
 При распространении бинарника необходимо предоставлять соответствующие исходники
-и сохранять авторство и лицензии. Название и ID отдельные: FugScope ARM / FSAR.
+и сохранять авторство и лицензии. Название и ID отдельные: FugScope ARM (macOS), FugScope (Windows), ID FSAR.
 Проект не является официальным релизом bigfug или Resolume.
 
 В `reference/` сохранены исходные `Plugin.h`, `Plugin.cpp` и `Instance.cpp` для
@@ -23,13 +23,20 @@
 
 - Resolume FFGL SDK: https://github.com/resolume/ffgl, commit
   `46758d72dd1e2bfbc29a44bc7b4d033e51a35348`, получен 2026-09-06.
-  Копия `source/lib` без изменений. BSD-3-Clause, см. `licenses/FFGL-BSD-3-Clause.txt`
+  Копия `source/lib`; в `ffglex/FFGLUtilities.cpp` регистр заголовка
+  `Windows.h` исправлен на `windows.h` для кросс-компиляции на Linux. BSD-3-Clause, см. `licenses/FFGL-BSD-3-Clause.txt`
   и уведомления в отдельных файлах SDK.
 - PortAudio v19.7.0: https://github.com/PortAudio/portaudio/releases/tag/v19.7.0.
   Commit `147dd722548358763a8b649b3e4b41dfffbcfbb6`.
-  Включены неизменённые `include`, `src/common`, `src/os/unix`, `src/hostapi/coreaudio`.
+  Включены неизменённые `include`, `src/common`, `src/os/unix`, `src/hostapi/coreaudio`, `src/os/win`, `src/hostapi/wasapi`.
   MIT, см. `licenses/PortAudio-MIT.txt` и уведомления в отдельных файлах.
-  В macOS-бинарник компилируется статически только CoreAudio backend.
+  Устаревшие WASAPI `mingw-include` не включены: используются заголовки Windows SDK/MinGW-w64.
+  В macOS-бинарник компилируется статически только CoreAudio backend; в Windows — WASAPI.
+
+- GLEW 2.2.0: https://github.com/nigels-com/glew/releases/tag/glew-2.2.0.
+  Включены `src/glew.c` и `include`, статическая Windows-сборка.
+  BSD/MIT и уведомления Khronos, см. `licenses/GLEW.txt`.
+  Исходный архив: https://archive.ubuntu.com/ubuntu/pool/universe/g/glew/glew_2.2.0.orig.tar.xz.
 
 SHA-256 включённых файлов: `vendor/SHA256SUMS` (пути от корня проекта).
 SHA-256 исходных архивов:

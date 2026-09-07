@@ -1,0 +1,16 @@
+name: Test waveform and OpenGL
+on:
+  workflow_dispatch:
+  push:
+    branches: [main, master]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update && sudo apt-get install -y libglew-dev libegl1-mesa-dev
+      - run: bash scripts/test-core.sh
+      - run: GL_TEST_SYSROOT=/ bash scripts/test-linux-gl.sh

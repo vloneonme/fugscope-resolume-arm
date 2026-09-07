@@ -15,6 +15,34 @@ bash scripts/install-macos.sh arm64
 
 Можно запустить `Build and Install.command`. Для Intel и Apple Silicon вместе используйте `universal` вместо `arm64`. Добавьте папку установки в Preferences → Video → FFGL Plugin Directories, перезапустите Resolume и найдите **FugScope ARM** в **Sources**.
 
+## Windows x64
+
+Требуются Windows 10/11 x64, 64-битный Resolume 7 и видеодрайвер с OpenGL 4.1. Плагин использует WASAPI и системный аудиовход по умолчанию. PortAudio, GLEW и C++ runtime встроены в DLL.
+
+Готовая сборка: откройте [GitHub Actions](https://github.com/vloneonme/fugscope-resolume-arm/actions/workflows/windows.yml), выберите успешный запуск и скачайте артефакт **FugScope-Windows-x64**. Внутри находятся архив плагина и соответствующие исходники.
+
+1. Закройте Resolume и распакуйте `FugScope-windows-x64.zip`.
+2. Скопируйте `FugScope.dll` в `Documents\Resolume\Extra Effects` либо выполните `install-windows.ps1` из распакованного архива. Скрипт сохраняет предыдущую DLL в `Documents\FugScope Backups`.
+3. Добавьте каталог в Preferences → Video → FFGL Plugin Directories и перезапустите Resolume.
+4. Найдите **FugScope** в **Sources**, поместите в клип и включите **Test Signal**.
+
+Для сборки из исходников установите Visual Studio 2022 Build Tools с **Desktop development with C++**, Windows SDK и CMake 3.20+. Выполните в PowerShell из корня проекта:
+
+```powershell
+./scripts/build-windows.ps1
+./scripts/install-windows.ps1
+```
+
+Результат — `dist/FugScope-windows-x64.zip`. Сборка включает тесты алгоритмов, аудиологики и загрузки DLL; сборщик останавливается при их ошибке. Если скрипты заблокированы политикой PowerShell, можно собрать через CMake вручную, без изменения политики:
+
+```powershell
+cmake -S . -B build/windows-x64 -G "Visual Studio 17 2022" -A x64
+cmake --build build/windows-x64 --config Release --parallel
+ctest --test-dir build/windows-x64 -C Release --output-on-failure
+```
+
+DLL будет в `build/windows-x64/Release/FugScope.dll`. Установите её вручную по шагам выше.
+
 ## Использование
 
 Перетащите источник в клип. Включите **Test Signal**, чтобы проверить изображение без микрофона. Отключите его для захвата первого канала системного устройства ввода по умолчанию; разрешите Resolume доступ к микрофону. Аудио не берётся автоматически из композиции или системного выхода: для этого нужен настроенный виртуальный аудиовход.
@@ -38,7 +66,7 @@ bash scripts/test-core.sh
 
 ## Статус
 
-Mac-версия работает по подтверждению пользователя. Windows x64 находится в подготовке. Контекст и границы проверок: [docs/validation.md](docs/validation.md). Следующий этап — Windows DLL, проверка сборки и публикация изменений.
+Mac-версия работает по подтверждению пользователя. Windows x64 DLL собрана кросс-компилятором MinGW; нативная сборка MSVC и тесты настроены в CI. Проверка изображения и реального аудиовхода в Windows Resolume ещё требуется. Контекст и границы проверок: [docs/validation.md](docs/validation.md). Следующий шаг проверки — запуск Windows-источника в Resolume с Test Signal и реальным аудиовходом.
 
 ## Лицензия
 

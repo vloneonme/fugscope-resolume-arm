@@ -5,8 +5,14 @@
 #include "ffgl/FFGLLog.h"
 #include <cstdio>
 
-static CFFGLPluginInfo PluginInfo(PluginFactory<FugScope>, "FSAR", "FugScope ARM",
-    2, 2, 1, 0, FF_SOURCE, "Audio waveform source. Unofficial fugScopeGL port for Apple Silicon.",
+#if defined(FFGL_WINDOWS)
+constexpr const char* pluginName = "FugScope";
+#else
+constexpr const char* pluginName = "FugScope ARM";
+#endif
+
+static CFFGLPluginInfo PluginInfo(PluginFactory<FugScope>, "FSAR", pluginName,
+    2, 2, 1, 0, FF_SOURCE, "Audio waveform source. Unofficial fugScopeGL port.",
     "Based on fugScopeGL by Alex May. GPL-3.0. Modern port 2026.");
 
 namespace {
