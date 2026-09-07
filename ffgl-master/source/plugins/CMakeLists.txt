@@ -1,6 +1,0 @@
-add_subdirectory(Add)
-add_subdirectory(AddSubtract)
-add_subdirectory(CustomThumbnail)
-add_subdirectory(Events)
-add_subdirectory(Gradients)
-add_subdirectory(Particles)
