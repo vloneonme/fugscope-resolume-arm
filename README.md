@@ -4,44 +4,36 @@
 
 ![Режимы FugScope](docs/preview.png)
 
-## macOS
+## Скачать и установить
 
-Требуются Apple Silicon, Resolume 7 с поддержкой ARM-плагинов и Xcode Command Line Tools (`xcode-select --install`). Пользователь подтвердил работу в Resolume 7.16.
+**Сборка и аккаунт GitHub не нужны.** Скачайте готовый архив для своей системы:
 
-```bash
-bash scripts/build-macos.sh arm64
-bash scripts/install-macos.sh arm64
-```
+| Система | Скачать |
+|---|---|
+| Windows 10/11 x64 | [FugScope-windows-x64.zip](https://github.com/vloneonme/fugscope-resolume-arm/releases/latest/download/FugScope-windows-x64.zip) |
+| macOS 11+, Apple Silicon и Intel | [FugScopeArm-universal.zip](https://github.com/vloneonme/fugscope-resolume-arm/releases/latest/download/FugScopeArm-universal.zip) |
 
-Можно запустить `Build and Install.command`. Для Intel и Apple Silicon вместе используйте `universal` вместо `arm64`. Добавьте папку установки в Preferences → Video → FFGL Plugin Directories, перезапустите Resolume и найдите **FugScope ARM** в **Sources**.
+[Все версии и примечания](https://github.com/vloneonme/fugscope-resolume-arm/releases) · [Исходники](https://github.com/vloneonme/fugscope-resolume-arm/releases/latest/download/FugScope-source.zip) · [SHA-256](https://github.com/vloneonme/fugscope-resolume-arm/releases/latest/download/SHA256SUMS.txt)
 
-## Windows x64
+### Windows
 
-Требуются Windows 10/11 x64, 64-битный Resolume 7 и видеодрайвер с OpenGL 4.1. Плагин использует WASAPI и системный аудиовход по умолчанию. PortAudio, GLEW и C++ runtime встроены в DLL.
+1. Закройте Resolume и распакуйте архив.
+2. Скопируйте `FugScope.dll` в `Documents\Resolume\Extra Effects`. При обновлении сохраните прежнюю DLL вне этой папки.
+3. Добавьте папку в Resolume → Preferences → Video → FFGL Plugin Directories и перезапустите приложение.
+4. Найдите **FugScope** в **Sources**, перетащите в клип и включите **Test Signal**.
 
-Готовая сборка: откройте [GitHub Actions](https://github.com/vloneonme/fugscope-resolume-arm/actions/workflows/windows.yml), выберите успешный запуск и скачайте артефакт **FugScope-Windows-x64**. Внутри находятся архив плагина и соответствующие исходники.
+Требуются 64-битный Resolume 7 и видеодрайвер с OpenGL 4.1. Дополнительные DLL, Visual Studio и CMake не нужны. Необязательный `install-windows.ps1` копирует DLL и сохраняет резервную копию.
 
-1. Закройте Resolume и распакуйте `FugScope-windows-x64.zip`.
-2. Скопируйте `FugScope.dll` в `Documents\Resolume\Extra Effects` либо выполните `install-windows.ps1` из распакованного архива. Скрипт сохраняет предыдущую DLL в `Documents\FugScope Backups`.
-3. Добавьте каталог в Preferences → Video → FFGL Plugin Directories и перезапустите Resolume.
-4. Найдите **FugScope** в **Sources**, поместите в клип и включите **Test Signal**.
+### macOS
 
-Для сборки из исходников установите Visual Studio 2022 Build Tools с **Desktop development with C++**, Windows SDK и CMake 3.20+. Выполните в PowerShell из корня проекта:
+1. Закройте Resolume и распакуйте архив двойным щелчком.
+2. Скопируйте **целиком** `FugScopeArm.bundle` в `Documents/Resolume/Extra Effects`. При обновлении сохраните прежний bundle вне этой папки.
+3. Добавьте папку в Resolume → Preferences → Video → FFGL Plugin Directories и перезапустите приложение.
+4. Найдите **FugScope ARM** в **Sources**, перетащите в клип и включите **Test Signal**.
 
-```powershell
-./scripts/build-windows.ps1
-./scripts/install-windows.ps1
-```
+Xcode, Homebrew и Terminal для установки не нужны. Архив Universal содержит ARM64 и Intel x86_64. На Apple Silicon нужен Resolume с поддержкой ARM FFGL; работа Mac-версии подтверждена пользователем в Resolume 7.16.
 
-Результат — `dist/FugScope-windows-x64.zip`. Сборка включает тесты алгоритмов, аудиологики и загрузки DLL; сборщик останавливается при их ошибке. Если скрипты заблокированы политикой PowerShell, можно собрать через CMake вручную, без изменения политики:
-
-```powershell
-cmake -S . -B build/windows-x64 -G "Visual Studio 17 2022" -A x64
-cmake --build build/windows-x64 --config Release --parallel
-ctest --test-dir build/windows-x64 -C Release --output-on-failure
-```
-
-DLL будет в `build/windows-x64/Release/FugScope.dll`. Установите её вручную по шагам выше.
+macOS bundle имеет локальную ad-hoc подпись; Developer ID и notarization пока отсутствуют. Если macOS блокирует загрузку, сохраните точное сообщение и сообщите о нём в [Issues](https://github.com/vloneonme/fugscope-resolume-arm/issues).
 
 ## Использование
 
@@ -56,6 +48,8 @@ ID плагина — `FSAR`; он не заменяет оригинальны�
 
 ## Структура и разработка
 
+[Инструкция сборки](docs/building.md) · [Порядок выпуска релиза](docs/releasing.md)
+
 `src/` — реализация; `vendor/` — необходимые исходники зависимостей; `scripts/` — сборка и установка; `tests/` — проверки; `resources/` — метаданные; `reference/` — исходные алгоритмы для сравнения; `docs/` — документация.
 
 ```bash
@@ -66,7 +60,7 @@ bash scripts/test-core.sh
 
 ## Статус
 
-Mac-версия работает по подтверждению пользователя. Windows x64 DLL собрана MinGW и нативно MSVC в GitHub Actions; core/audio/LoadLibrary тесты прошли. macOS Universal и Linux OpenGL CI также прошли. Проверка изображения и реального аудиовхода в Windows Resolume ещё требуется. Контекст и границы проверок: [docs/validation.md](docs/validation.md). Следующий шаг проверки — запуск Windows-источника в Resolume с Test Signal и реальным аудиовходом.
+Mac-версия работает по подтверждению пользователя. Windows x64 DLL собрана MinGW и нативно MSVC в GitHub Actions; core/audio/LoadLibrary тесты прошли. macOS Universal и Linux OpenGL CI также прошли. Проверка изображения и реального аудиовхода в Windows Resolume ещё требуется. Контекст и границы проверок: [docs/validation.md](docs/validation.md). Готовые архивы распространяются через Releases; Actions используется только для автоматической сборки проекта. Следующий шаг проверки — запуск Windows-источника в Resolume с Test Signal и реальным аудиовходом.
 
 ## Лицензия
 

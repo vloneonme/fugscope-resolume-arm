@@ -1,6 +1,7 @@
 name: Build Windows plugin
 on:
   workflow_dispatch:
+  workflow_call:
   push:
     branches: [main, master]
   pull_request:

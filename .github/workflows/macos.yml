@@ -1,6 +1,7 @@
 name: Build macOS bundles
 on:
   workflow_dispatch:
+  workflow_call:
   push:
     branches: [main, master]
   pull_request:
