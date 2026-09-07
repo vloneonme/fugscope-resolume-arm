@@ -33,3 +33,9 @@ Windows executables в Linux не запущены: локальный Wine уп
 ## Следующий шаг
 
 Проверить результат GitHub Actions, затем Windows DLL в Resolume: Test Signal, все режимы, системный ввод, несколько экземпляров и сохранение/открытие композиции. При ошибке сохранить версию Windows/Resolume, название устройства и текст загрузчика; исправлять по фактическому логу.
+
+## Готовый релиз v1.0.0
+
+На коммите `a37a8cc` [release workflow](https://github.com/vloneonme/fugscope-resolume-arm/actions/runs/34113770650) повторно выполнил Windows/macOS/Linux сборки и тесты, затем успешно опубликовал четыре assets в GitHub Releases. README содержит прямые ссылки; пользователю не требуется собирать проект или входить в Actions. Ограничения host/audio и подписи не изменились.
+
+Публичные ссылки `releases/latest/download` проверены без токена: оба бинарных ZIP и source ZIP скачаны, целостность ZIP и соответствие SHA-256 из GitHub API подтверждены. В Windows ZIP есть FugScope.dll, в macOS ZIP — полный bundle, в source ZIP — vendored исходники.

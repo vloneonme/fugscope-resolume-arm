@@ -13,4 +13,4 @@
 
 ## Текущее состояние
 
-Подготовлен первый выпуск v1.0.0: код плагина не изменён, добавлены автоматическая публикация и прямые ссылки. Следующий шаг — проверить опубликованные assets после выполнения workflow. Ограничения проверки хоста и подписи указаны в README и release notes.
+Опубликован [v1.0.0](https://github.com/vloneonme/fugscope-resolume-arm/releases/tag/v1.0.0), исходники `a37a8cc`. [Release workflow](https://github.com/vloneonme/fugscope-resolume-arm/actions/runs/34113770650) прошёл все три платформенных job и публикацию. Доступны Windows ZIP, macOS Universal ZIP, source ZIP и SHA-256. Код плагина не изменён. Следующий шаг — собирать обратную связь о загрузке скачанных плагинов в Resolume; для нового выпуска использовать новый тег. Ограничения проверки хоста и подписи указаны в README и release notes.

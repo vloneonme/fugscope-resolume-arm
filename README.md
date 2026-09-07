@@ -60,7 +60,7 @@ bash scripts/test-core.sh
 
 ## Статус
 
-Mac-версия работает по подтверждению пользователя. Windows x64 DLL собрана MinGW и нативно MSVC в GitHub Actions; core/audio/LoadLibrary тесты прошли. macOS Universal и Linux OpenGL CI также прошли. Проверка изображения и реального аудиовхода в Windows Resolume ещё требуется. Контекст и границы проверок: [docs/validation.md](docs/validation.md). Готовые архивы распространяются через Releases; Actions используется только для автоматической сборки проекта. Следующий шаг проверки — запуск Windows-источника в Resolume с Test Signal и реальным аудиовходом.
+Mac-версия работает по подтверждению пользователя. Windows x64 DLL собрана MinGW и нативно MSVC в GitHub Actions; core/audio/LoadLibrary тесты прошли. macOS Universal и Linux OpenGL CI также прошли. Проверка изображения и реального аудиовхода в Windows Resolume ещё требуется. Контекст и границы проверок: [docs/validation.md](docs/validation.md). [Первый релиз v1.0.0 опубликован](https://github.com/vloneonme/fugscope-resolume-arm/releases/tag/v1.0.0), его сборки и проверки прошли. Готовые архивы распространяются через Releases; Actions используется только для автоматической сборки проекта. Следующий шаг проверки — запуск Windows-источника в Resolume с Test Signal и реальным аудиовходом.
 
 ## Лицензия
 

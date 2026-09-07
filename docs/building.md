@@ -33,4 +33,3 @@ ctest --test-dir build/windows-x64 -C Release --output-on-failure
 ```
 
 DLL будет в `build/windows-x64/Release/FugScope.dll`. Установите её вручную по шагам выше.
-
