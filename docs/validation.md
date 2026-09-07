@@ -10,9 +10,19 @@
 - Проверены shell syntax, контрольные суммы vendored-файлов и Git diff. SDK содержит единственную правку регистра `Windows.h` → `windows.h`, описанную в NOTICE.
 - Добавлены Windows MSVC CI с core/audio/LoadLibrary тестами и упаковкой DLL с исходниками, macOS Universal CI и Linux OpenGL CI.
 
+## GitHub Actions
+
+Для исходников коммита `cc1f662` успешно завершены:
+
+- [Windows x64 MSVC, три теста и ZIP](https://github.com/vloneonme/fugscope-resolume-arm/actions/runs/34111615311).
+- [macOS Universal и core/audio](https://github.com/vloneonme/fugscope-resolume-arm/actions/runs/34111615397).
+- [Linux ASan/UBSan и OpenGL](https://github.com/vloneonme/fugscope-resolume-arm/actions/runs/34111615295).
+
+Windows-артефакт содержит DLL/установщик/лицензии и отдельный ZIP соответствующих исходников. Бинарники и локальные архивы в Git не добавлены.
+
 ## Ограничения
 
-Windows executables в Linux не запущены: локальный Wine упёрся в недоступный runtime-каталог и ограничения сокетов sandbox. Это ограничение среды, не результат теста плагина. Нативный MSVC и PowerShell проверяются Windows CI; результат CI следует смотреть в GitHub Actions.
+Windows executables в Linux не запущены: локальный Wine упёрся в недоступный runtime-каталог и ограничения сокетов sandbox. Это ограничение среды, не результат теста плагина. Нативная сборка MSVC, PowerShell build/package, core/audio/LoadLibrary тесты и загрузка артефактов успешно прошли в Windows CI.
 
 Реальная отрисовка, WASAPI-микрофон, несколько экземпляров и повторное открытие композиции в Windows Resolume ещё требуют ручной проверки. Linux audio-test использует модель драйвера. Universal Intel отдельно не подтверждён.
 
